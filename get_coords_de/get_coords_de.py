@@ -25,73 +25,73 @@ DE440S_FILE_RECORDS: tuple[FileRecords] = (
         # MERCURY_BARYCENTER
         "rec_start_addr": 8065,
         "int_len": 691200.0,
-        "rsize": 44.0,
+        "rsize": 44,
     },
     {
         # VENUS_BARYCENTER
         "rec_start_addr": 610869,
         "int_len": 1382400.0,
-        "rsize": 32.0,
+        "rsize": 32,
     },
     {
         # EARTH_BARYCENTER
         "rec_start_addr": 830073,
         "int_len": 1382400.0,
-        "rsize": 41.0,
+        "rsize": 41,
     },
     {
         # MARS_BARYCENTER
         "rec_start_addr": 1110927,
         "int_len": 2764800.0,
-        "rsize": 35.0,
+        "rsize": 35,
     },
     {
         # JUPITER_BARYCENTER
         "rec_start_addr": 1230806,
         "int_len": 2764800.0,
-        "rsize": 26.0,
+        "rsize": 26,
     },
     {
         # SATURN_BARYCENTER
         "rec_start_addr": 1319860,
         "int_len": 2764800.0,
-        "rsize": 23.0,
+        "rsize": 23,
     },
     {
         # URANUS_BARYCENTER
         "rec_start_addr": 1398639,
         "int_len": 2764800.0,
-        "rsize": 20.0,
+        "rsize": 20,
     },
     {
         # NEPTUNE_BARYCENTER
         "rec_start_addr": 1467143,
         "int_len": 2764800.0,
-        "rsize": 20.0,
+        "rsize": 20,
     },
     {
         # PLUTO_BARYCENTER
         "rec_start_addr": 1535647,
         "int_len": 2764800.0,
-        "rsize": 20.0,
+        "rsize": 20,
     },
     {
         # SUN
         "rec_start_addr": 1604151,
         "int_len": 1382400.0,
-        "rsize": 35.0,
+        "rsize": 35,
     },
     {
         # MOON
         "rec_start_addr": 1843905,
         "int_len": 345600.0,
-        "rsize": 41.0,
+        "rsize": 41,
     },
     {
         # EARTH
         "rec_start_addr": 2967309,
         "int_len": 345600.0,
-        "rsize": 41.0,
+        "rsize": 41,
     },
 )
 
@@ -131,13 +131,12 @@ def get_coords(date_in_seconds: int, target_code: int, file_in_mem: bytes) -> Po
     )
     record = 8 * int(start_addr + internal_offset)
 
-    order = (int(rsize) - 2) / 3 - 1
-
     # the only place, we read data from bsp file, loaded in memory
     data = array.array("d", file_in_mem[record - 8 : record + int(rsize) * 8])
 
     tau = (date_in_seconds - data[0]) / data[1]
-    order = int(order)
+
+    order = int((rsize - 2) / 3) - 1
     deg = order + 1
 
     return {
